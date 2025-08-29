@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Gestione Edicola</title>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    input, select { margin: 5px 0; padding: 5px; width: 100%; }
+    button { padding: 10px; margin-top: 10px; }
+    .pubblicazioni { margin-top: 30px; }
+  </style>
+</head>
+<body>
+  <h1>📚 Gestione Pubblicazioni</h1>
+
+  <h2>Aggiungi una nuova pubblicazione</h2>
+  <form id="pubForm">
+    <input type="text" id="titolo" placeholder="Titolo" required />
+    <select id="tipo">
+      <option value="Quotidiano">Quotidiano</option>
+      <option value="Settimanale">Settimanale</option>
+      <option value="Mensile">Mensile</option>
+      <option value="Altro">Altro</option>
+    </select>
+    <input type="text" id="editore" placeholder="Editore" />
+    <input type="number" id="prezzo" placeholder="Prezzo (€)" step="0.01" />
+    <input type="number" id="id_distributore" placeholder="ID Distributore" />
+    <button type="submit">➕ Aggiungi</button>
+  </form>
+
+  <div class="pubblicazioni">
+    <h2>📋 Elenco Pubblicazioni</h2>
+    <ul id="lista"></ul>
+  </div>
+
+  <script>
+    // Carica le pubblicazioni
+    async function caricaPubblicazioni() {
+      const res = await fetch('/pubblicazioni');
+      const data = await res.json();
+      const lista = document.getElementById('lista');
+      lista.innerHTML = '';
+      data.forEach(pub => {
+        const li = document.createElement('li');
+        li.textContent = `${pub.titolo} (${pub.tipo}) - €${pub.prezzo}`;
+        lista.appendChild(li);
+      });
+    }
+
+    // Invio del modulo
+    document.getElementById('pubForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      const payload = {
+        titolo: document.getElementById('titolo').value,
+        tipo: document.getElementById('tipo').value,
+        editore: document.getElementById('editore').value,
+        prezzo: parseFloat(document.getElementById('prezzo').value),
+        id_distributore: parseInt(document.getElementById('id_distributore').value)
+      };
+      await fetch('/pubblicazioni', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      e.target.reset();
+      caricaPubblicazioni();
+    });
+
+    caricaPubblicazioni();
+  </script>
+</body>
+</html>
+<h2>Aggiungi un distributore</h2>
+<form id="distForm">
+  <input type="text" id="nome" placeholder="Nome distributore" required />
+  <input type="text" id="contatto" placeholder="Email o contatto" />
+  <input type="text" id="telefono" placeholder="Telefono" />
+  <button type="submit">➕ Aggiungi Distributore</button>
+</form>
+
+<ul id="elencoDist"></ul>
+<script>
+  // Carica distributori
+  async function caricaDistributori() {
+    try {
+      const res = await fetch('/distributori');
+      const data = await res.json();
+      const elenco = document.getElementById('elencoDist');
+      elenco.innerHTML = '';
+      data.forEach(d => {
+        const li = document.createElement('li');
+        li.textContent = `${d.nome} - ${d.telefono}`;
+        elenco.appendChild(li);
+      });
+    } catch (error) {
+      console.error('Errore nel caricamento dei distributori:', error);
+    }
+  }
+
+  // Invio distributore
+  document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('distForm');
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      const payload = {
+        nome: document.getElementById('nome').value,
+        contatto: document.getElementById('contatto').value,
+        telefono: document.getElementById('telefono').value
+      };
+      try {
+        await fetch('/distributori', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        form.reset();
+        caricaDistributori();
+      } catch (error) {
+        console.error('Errore nell’invio del distributore:', error);
+      }
+    });
+
+    caricaDistributori(); // Carica all’avvio
+  });
+</script>
+<h2>🏪 Aggiungi una nuova edicola</h2>
+<form id="edicolaForm">
+  <input type="text" id="nomeEdicola" placeholder="Nome edicola" required />
+  <input type="text" id="indirizzo" placeholder="Indirizzo" />
+  <input type="text" id="città" placeholder="Città" />
+  <input type="text" id="provincia" placeholder="Provincia" />
+  <input type="text" id="telefonoEdicola" placeholder="Telefono" />
+  <input type="email" id="emailEdicola" placeholder="Email" />
+  <input type="text" id="referente" placeholder="Referente" />
+  <button type="submit">➕ Aggiungi Edicola</button>
+</form>
+
+<ul id="listaEdicole"></ul>
+<script>
+  // Carica edicole
+  async function caricaEdicole() {
+    const res = await fetch('/edicole');
+    const data = await res.json();
+    const lista = document.getElementById('listaEdicole');
+    lista.innerHTML = '';
+    data.forEach(e => {
+      const li = document.createElement('li');
+      li.textContent = `${e.nome} (${e.città}, ${e.provincia}) - ${e.telefono}`;
+      lista.appendChild(li);
+    });
+  }
+
+  // Invio edicola
+  document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('edicolaForm');
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      const payload = {
+        nome: document.getElementById('nomeEdicola').value,
+        indirizzo: document.getElementById('indirizzo').value,
+        città: document.getElementById('città').value,
+        provincia: document.getElementById('provincia').value,
+        telefono: document.getElementById('telefonoEdicola').value,
+        email: document.getElementById('emailEdicola').value,
+        referente: document.getElementById('referente').value
+      };
+      await fetch('/edicole', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      form.reset();
+      caricaEdicole();
+    });
+
+    caricaEdicole(); // Carica all’avvio
+  });
+</script>
+</body>
+</html>
