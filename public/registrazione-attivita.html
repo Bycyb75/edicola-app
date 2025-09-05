@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Registrazione Attività</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h2>📝 Registra la tua attività</h2>
+
+  <form id="attivitaForm">
+    <input type="text" id="nome" placeholder="Nome attività" required />
+    <input type="text" id="indirizzo" placeholder="Indirizzo" required />
+    <input type="text" id="citta" placeholder="Città" required />
+    <input type="text" id="provincia" placeholder="Provincia" required />
+    <input type="tel" id="telefono" placeholder="Telefono" required />
+    <input type="email" id="email" placeholder="Email" required />
+    <input type="text" id="referente" placeholder="Referente" required />
+    <button type="submit">📨 Invia</button>
+  </form>
+
+  <p id="messaggio" style="color: green;"></p>
+
+  <script>
+    document.getElementById('attivitaForm').addEventListener('submit', async e => {
+      e.preventDefault();
+
+      const payload = {
+        nome: document.getElementById('nome').value,
+        indirizzo: document.getElementById('indirizzo').value,
+        città: document.getElementById('citta').value,
+        provincia: document.getElementById('provincia').value,
+        telefono: document.getElementById('telefono').value,
+        email: document.getElementById('email').value,
+        referente: document.getElementById('referente').value
+      };
+
+      try {
+        const res = await fetch('/edicole', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const result = await res.json();
+        console.log("📦 Risposta registrazione attività:", result);
+
+        if (result.id) {
+          document.getElementById('messaggio').textContent = 'Attività registrata con successo!';
+          setTimeout(() => {
+            window.location.href = 'gestionale.html';
+          }, 1500);
+        } else {
+          document.getElementById('messaggio').textContent = 'Errore nella registrazione.';
+        }
+      } catch (error) {
+        console.error('❌ Errore:', error);
+        document.getElementById('messaggio').textContent = 'Errore di connessione al server.';
+      }
+    });
+  </script>
+</body>
+</html>

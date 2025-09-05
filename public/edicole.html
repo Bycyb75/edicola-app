@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Gestione Edicole</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>🏪 Gestione Edicole</h1>
+
+ <nav class="nav-buttons">
+  <button onclick="location.href='gestionale.html'">🏠 Home</button>
+  <button onclick="location.href='distributori.html'">🚚 Distributori</button>
+  <button onclick="location.href='edicole.html'">🏪 Edicole</button>
+</nav>
+
+
+
+  <h2>Aggiungi una nuova edicola</h2>
+  <form id="edicolaForm">
+    <input type="text" id="nomeEdicola" placeholder="Nome edicola" required />
+    <input type="text" id="indirizzo" placeholder="Indirizzo" />
+    <input type="text" id="città" placeholder="Città" />
+    <input type="text" id="provincia" placeholder="Provincia" />
+    <input type="text" id="telefonoEdicola" placeholder="Telefono" />
+    <input type="email" id="emailEdicola" placeholder="Email" />
+    <input type="text" id="referente" placeholder="Referente" />
+    <button type="submit">➕ Aggiungi Edicola</button>
+  </form>
+
+  <div class="lista">
+    <h2>📋 Elenco Edicole</h2>
+    <ul id="listaEdicole"></ul>
+  </div>
+
+  <script src="script-edicole.js"></script>
+</body>
+</html>

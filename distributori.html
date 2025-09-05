@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Gestione Distributori</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>🚚 Gestione Distributori</h1>
+
+  <nav>
+    <a href="index.html">🏠 Home</a> |
+    <a href="pubblicazioni.html">📖 Pubblicazioni</a> |
+    <a href="edicole.html">🏪 Edicole</a>
+  </nav>
+
+  <h2>Aggiungi un nuovo distributore</h2>
+  <form id="distForm">
+    <input type="text" id="nome" placeholder="Nome distributore" required />
+    <input type="text" id="contatto" placeholder="Email o contatto" />
+    <input type="text" id="telefono" placeholder="Telefono" />
+    <button type="submit">➕ Aggiungi Distributore</button>
+  </form>
+
+  <div class="lista">
+    <h2>📋 Elenco Distributori</h2>
+    <ul id="elencoDist"></ul>
+  </div>
+
+  <script src="script-distributori.js"></script>
+</body>
+</html>

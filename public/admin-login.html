@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Login Amministratore</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>🔐 Accesso Amministratore</h1>
+
+  <form id="adminLoginForm">
+    <input type="text" id="username" placeholder="Username" required />
+    <input type="password" id="password" placeholder="Password" required />
+    <button type="submit">✅ Accedi</button>
+  </form>
+
+  <p id="messaggio" style="color: red;"></p>
+
+  <script>
+    document.getElementById('adminLoginForm').addEventListener('submit', async e => {
+      e.preventDefault();
+
+      const payload = {
+        username: document.getElementById('username').value,
+        password: document.getElementById('password').value
+      };
+
+      try {
+        const res = await fetch('/admin/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const result = await res.json();
+        console.log("🔐 Risposta login:", result);
+
+        if (result.success) {
+          window.location.href = 'admin.html';
+        } else {
+          document.getElementById('messaggio').textContent = result.messaggio || 'Accesso negato';
+        }
+      } catch (error) {
+        console.error('❌ Errore nel login:', error);
+        document.getElementById('messaggio').textContent = 'Errore di connessione al server';
+      }
+    });
+  </script>
+</body>
+</html>
