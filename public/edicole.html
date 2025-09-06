@@ -2,37 +2,101 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8">
-  <title>Gestione Edicole</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Gestione Edicola</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f3f4f6;
+      margin: 0;
+      padding: 0;
+    }
+
+    .top-bar {
+      background-color: #4f46e5;
+      color: white;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 20px;
+    }
+
+    .top-bar h1 {
+      margin: 0;
+      font-size: 20px;
+    }
+
+    .home-btn {
+      background-color: white;
+      color: #4f46e5;
+      text-decoration: none;
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-weight: 600;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      transition: background-color 0.3s ease;
+    }
+
+    .home-btn:hover {
+      background-color: #e0e7ff;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 40px auto;
+      background-color: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+      text-align: center;
+    }
+
+    .sottotitolo {
+      font-size: 16px;
+      color: #6b7280;
+      margin-bottom: 30px;
+    }
+
+    .menu {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .card {
+      background-color: #4f46e5;
+      color: white;
+      border: none;
+      padding: 16px;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: transform 0.2s ease, background-color 0.2s ease;
+    }
+
+    .card:hover {
+      background-color: #4338ca;
+      transform: scale(1.03);
+    }
+  </style>
 </head>
 <body>
-  <h1>🏪 Gestione Edicole</h1>
-
- <nav class="nav-buttons">
-  <button onclick="location.href='gestionale.html'">🏠 Home</button>
-  <button onclick="location.href='distributori.html'">🚚 Distributori</button>
-  <button onclick="location.href='edicole.html'">🏪 Edicole</button>
-</nav>
-
-
-
-  <h2>Aggiungi una nuova edicola</h2>
-  <form id="edicolaForm">
-    <input type="text" id="nomeEdicola" placeholder="Nome edicola" required />
-    <input type="text" id="indirizzo" placeholder="Indirizzo" />
-    <input type="text" id="città" placeholder="Città" />
-    <input type="text" id="provincia" placeholder="Provincia" />
-    <input type="text" id="telefonoEdicola" placeholder="Telefono" />
-    <input type="email" id="emailEdicola" placeholder="Email" />
-    <input type="text" id="referente" placeholder="Referente" />
-    <button type="submit">➕ Aggiungi Edicola</button>
-  </form>
-
-  <div class="lista">
-    <h2>📋 Elenco Edicole</h2>
-    <ul id="listaEdicole"></ul>
+  <div class="top-bar">
+    <a href="/gestionale.html" class="home-btn">🏠 Home</a>
+    <h1>🏪 Gestione Edicola</h1>
   </div>
 
-  <script src="script-edicole.js"></script>
+  <div class="container">
+    <p class="sottotitolo">Scegli un'operazione</p>
+
+    <div class="menu">
+      <button class="card">📥 Importazione EC</button>
+      <button class="card">❌ Mancanze</button>
+      <button class="card">🔄 Differenza Rese</button>
+    </div>
+  </div>
 </body>
 </html>
